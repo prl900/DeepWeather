@@ -12,12 +12,12 @@ airports = ['EIDW', 'EGLL', 'LFPG', 'LFBO', 'EGPH', 'EHAM', 'EBBR', 'LEMD', 'LEB
             'LIMC', 'LSZH', 'EDDM', 'EDFH', 'EDDT', 'EKCH', 'ENGM', 'ESSA', 'EFHK', 'LOWW']
 
 def get_rains(code):
-    arr = np.load("/home/900/prl900/tensorflow/data/rain.npy")
+    arr = np.load("data/rain.npy")
     idx = airports.index(code)
     return arr[:, idx].astype(np.int32)
 
 def get_era_full(param, level):
-    arr = np.load("/g/data2/z00/prl900/keras_data/{}{}_uint8.npy".format(param, level))
+    arr = np.load("data/{}{}_uint8.npy".format(param, level))
     return arr.astype(np.float32) / 256.
 
 def train_model(airport):
@@ -50,7 +50,7 @@ def train_model(airport):
     csv_logger = CSVLogger('{}.log'.format(airport))
     model.fit(X, b, batch_size=100, epochs=300, verbose=1, validation_split=0.2, callbacks=[csv_logger])
 
-    model.save('model_{}.h5'.format(airport))
+    model.save('model_2d_{}.h5'.format(airport))
 
 if __name__ == '__main__':
     airport = sys.argv[1]
